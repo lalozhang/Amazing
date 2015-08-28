@@ -8,6 +8,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.TouchDelegate;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class SideIndex extends LinearLayout {
 
     private int sideHeight;
     private float heightPerItem;
+    private TextView centerLetter;
 
     public SideIndex(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,11 +33,13 @@ public class SideIndex extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
     }
 
-
+    public void setCenterLettterText(TextView text){
+        this.centerLetter=text;
+    }
     public void genIndexBar(Context context,final AmazingListView amazingListView,int letterColor,int textSize) {
         sideHeight = this.getHeight();
         this.removeAllViews();
-        List<Pair<String, List<Object>>> data = amazingListView.getAdapter().getData();
+        final List<Pair<String, List<Object>>> data = amazingListView.getAdapter().getData();
         for (int i = 0; i < data.size(); i++) {
             TextView tmpTV = new TextView(context);
             String tmpLetter = data.get(i).first;
@@ -55,7 +59,30 @@ public class SideIndex extends LinearLayout {
                 public boolean onTouchEvent(MotionEvent event) {
                     int index = (int) (event.getY() / heightPerItem);
                     int position = amazingListView.getAdapter().getPositionForSection(index);
+                    if (index < 0) {
+                        index = 0;
+                    }
+                    if (index >= data.size()) {
+                        index = data.size() - 1;
+                    }
                     amazingListView.setSelection(position);
+                    if(centerLetter!=null){
+                        switch (event.getAction()){
+                            case MotionEvent.ACTION_DOWN:
+                                centerLetter.setVisibility(View.VISIBLE);
+                                centerLetter.setText(data.get(index).first);
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                centerLetter.setText(data.get(index).first);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                centerLetter.setVisibility(View.GONE);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     return true;
                 }
             });

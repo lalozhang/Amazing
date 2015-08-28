@@ -4,8 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.amazing.adapters.ItemAdapter;
 import com.amazing.view.AmazingListView;
 import com.amazing.view.SideIndex;
@@ -13,25 +19,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ItemAdapter.OnItemPerformanceListener {
     private RelativeLayout rlMain;
     private AmazingListView listView;
     private ItemAdapter itemAdapter;
     private SideIndex sideIndex;
-
+    private TextView letter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         rlMain= (RelativeLayout) findViewById(R.id.rlMain);
+        letter= (TextView) findViewById(R.id.tv_letter);
         listView= (AmazingListView) findViewById(R.id.listView);
         listView.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.item_header,listView,false));
         itemAdapter=new ItemAdapter(this,getCityData());
         listView.setAdapter(itemAdapter);
+
+        itemAdapter.setOnItemPerformanceListener(this);
         sideIndex= (SideIndex) findViewById(R.id.sideIndex);
         rlMain.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
+                sideIndex.setCenterLettterText(letter);
                 sideIndex.genIndexBar(MainActivity.this,listView,0xff1ba9ba,13);
                 rlMain.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
@@ -112,4 +122,9 @@ public class MainActivity extends Activity {
     }
 
 
+    @Override
+    public void onItemBodyCliked(int position, View convertView, ViewGroup parent, String section) {
+        String city = itemAdapter.getItem(position);
+        Toast.makeText(this,city,Toast.LENGTH_LONG).show();
+    }
 }

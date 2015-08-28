@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:orientation="vertical">
     <include
         layout="@layout/item_header" />
     <TextView
@@ -16,7 +15,8 @@
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:textColor="#333333"
-        android:text="北京" />
+        android:text="北京"
+        android:background="@drawable/item_body_selector"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class ItemAdapter extends BaseAmazingAdapter<String> {
     private Context context;
+    private OnItemPerformanceListener l;
     public ItemAdapter(Context context,List<Pair<String, List<String>>> data){
         this.data=data;
         this.context=context;
@@ -36,7 +37,7 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
     }
 
     @Override
-    public View getAmazingView(int position, View convertView, ViewGroup parent, String section) {
+    public View getAmazingView(final int position, View convertView, final ViewGroup parent, final String section) {
         ViewHolder holder;
         if (convertView==null) {
             holder=new ViewHolder();
@@ -49,6 +50,14 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
         }
 
         holder.city.setText(getItem(position));
+
+        final View finalConvertView = convertView;
+        holder.city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.onItemBodyCliked(position, finalConvertView,parent,section);
+            }
+        });
         return convertView;
     }
 
@@ -67,5 +76,12 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
         }
     }
 
+    public  void setOnItemPerformanceListener(OnItemPerformanceListener l){
+        this.l=l;
+    }
 
+    public interface OnItemPerformanceListener{
+        void onItemBodyCliked(int position, View convertView, ViewGroup parent, String section);
+
+    }
 }
