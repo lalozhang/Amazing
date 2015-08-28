@@ -1,38 +1,23 @@
 package com.amazing;
 
-import android.graphics.Rect;
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.TouchDelegate;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.amazing.adapters.ItemAdapter;
-import android.widget.LinearLayout.LayoutParams;
 import com.amazing.view.AmazingListView;
-
+import com.amazing.view.SideIndex;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private RelativeLayout rlMain;
     private AmazingListView listView;
     private ItemAdapter itemAdapter;
-    private LinearLayout sideIndex;
-    private int sideHeight;
-    private int heightPerItem;
+    private SideIndex sideIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,44 +29,14 @@ public class MainActivity extends ActionBarActivity {
         listView.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.item_header,listView,false));
         itemAdapter=new ItemAdapter(this,getCityData());
         listView.setAdapter(itemAdapter);
-        sideIndex= (LinearLayout) findViewById(R.id.sideIndex);
+        sideIndex= (SideIndex) findViewById(R.id.sideIndex);
         rlMain.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                genIndexBar();
+                sideIndex.genIndexBar(MainActivity.this,listView,0xff1ba9ba,13);
                 rlMain.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
 
-    }
-
-    private void genIndexBar(){
-        sideHeight=sideIndex.getHeight();
-        sideIndex.removeAllViews();
-        List<Pair<String, List<String>>> data = itemAdapter.getData();
-        for(int i=0;i<data.size();i++){
-            TextView tmpTV = new TextView(this);
-            String tmpLetter = data.get(i).first;
-            tmpTV.setText(tmpLetter);
-            tmpTV.setGravity(Gravity.CENTER);
-            tmpTV.setTextColor(0xff1ba9ba);
-            tmpTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
-            LayoutParams params = new LayoutParams(-1, LayoutParams.WRAP_CONTENT, 1);
-            tmpTV.setLayoutParams(params);
-            sideIndex.addView(tmpTV);
-        }
-
-        if (itemAdapter.getData().size() > 0) {
-            heightPerItem = sideHeight / sideIndex.getChildCount();
-            sideIndex.setTouchDelegate(new TouchDelegate(new Rect(), sideIndex) {
-                @Override
-                public boolean onTouchEvent(MotionEvent event) {
-                    int index = (int) (event.getY() / heightPerItem);
-                    int position = itemAdapter.getPositionForSection(index);
-                    listView.setSelection(position);
-                    return true;
-                }
-            });
-        }
     }
 
     private List<Pair<String,List<String>>> getCityData(){
@@ -104,10 +59,10 @@ public class MainActivity extends ActionBarActivity {
         String[] arrR=new String[]{"日照","饶阳"};
         String[] arrS=new String[]{"苏州","上海","三亚","汕头"};
         String[] arrT=new String[]{"天津","通辽","吐鲁番"};
-        String[] arrW=new String[]{"威海","无锡","武汉"};
-        String[] arrX=new String[]{"西安","西宁","襄阳","新乡","盱眙"};
-        String[] arrY=new String[]{"烟台","扬州","伊犁","延安","雅安"};
-        String[] arrZ=new String[]{"张家界","枣庄","庄河","驻马店"};
+        String[] arrW=new String[]{"威海","无锡","武汉","吴中","万州","芜湖","武昌"};
+        String[] arrX=new String[]{"西安","西宁","襄阳","新乡","盱眙","兴城","邢台","西昌","锡林郭勒"};
+        String[] arrY=new String[]{"烟台","扬州","伊犁","延安","雅安","雁荡山","沂蒙山","宜兴","银川"};
+        String[] arrZ=new String[]{"张家界","枣庄","庄河","驻马店","漳州","张家港","张家口","涿州","郑州","湛江","肇庆","珠海","遵义","舟山","张掖","中卫"};
         List<String> listA = Arrays.asList(arrA);
         List<String> listB = Arrays.asList(arrB);
         List<String> listC = Arrays.asList(arrC);
@@ -150,33 +105,11 @@ public class MainActivity extends ActionBarActivity {
         data.add(new Pair("S",listS));
         data.add(new Pair("T",listT));
         data.add(new Pair("W",listW));
-
         data.add(new Pair("X",listX));
-
         data.add(new Pair("Y",listY));
         data.add(new Pair("Z",listZ));
         return data;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
