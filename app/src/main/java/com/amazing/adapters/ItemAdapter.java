@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amazing.R;
-import com.amazing.model.City;
-import com.amazing.view.BaseAmazingAdapter;
+import com.amazing.amzing.BaseAmazingAdapter;
 
 import java.util.List;
 

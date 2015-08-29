@@ -7,14 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazing.adapters.ItemAdapter;
-import com.amazing.view.AmazingListView;
-import com.amazing.view.SideIndex;
+import com.amazing.amzing.AmazingListView;
+import com.amazing.amzing.SideIndex;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,6 +124,6 @@ public class MainActivity extends Activity implements ItemAdapter.OnItemPerforma
     @Override
     public void onItemBodyCliked(int position, View convertView, ViewGroup parent, String section) {
         String city = itemAdapter.getItem(position);
-        Toast.makeText(this,city,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,city,Toast.LENGTH_SHORT).show();
     }
 }
