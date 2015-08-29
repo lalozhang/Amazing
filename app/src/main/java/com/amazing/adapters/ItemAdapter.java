@@ -54,7 +54,7 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
         holder.city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                l.onItemBodyCliked(position, finalConvertView,parent,section);
+                l.onItemBodyClick(position, finalConvertView,parent,section);
             }
         });
         return convertView;
@@ -80,7 +80,7 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
     }
 
     public interface OnItemPerformanceListener{
-        void onItemBodyCliked(int position, View convertView, ViewGroup parent, String section);
+        void onItemBodyClick(int position, View convertView, ViewGroup parent, String section);
 
     }
 }

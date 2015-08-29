@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements ItemAdapter.OnItemPerforma
 
 
     @Override
-    public void onItemBodyCliked(int position, View convertView, ViewGroup parent, String section) {
+    public void onItemBodyClick(int position, View convertView, ViewGroup parent, String section) {
         String city = itemAdapter.getItem(position);
         Toast.makeText(this,city,Toast.LENGTH_SHORT).show();
     }
