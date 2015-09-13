@@ -25,12 +25,13 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
 
     @Override
     protected void bindSectionHeader(View view, int position, String section, boolean displaySectionHeader) {
-        TextView lSectionHeader= (TextView) view.findViewById(R.id.tv_city);
+        View header = view.findViewById(R.id.ll_header);
+        TextView lSectionHeader= (TextView) header.findViewById(R.id.tv_city);
         if(displaySectionHeader){
-            lSectionHeader.setVisibility(View.VISIBLE);
+            header.setVisibility(View.VISIBLE);
             lSectionHeader.setText(section);
         }else{
-            lSectionHeader.setVisibility(View.GONE);
+            header.setVisibility(View.GONE);
         }
 
     }
@@ -68,10 +69,10 @@ public class ItemAdapter extends BaseAmazingAdapter<String> {
     @Override
     protected void configurePinnedHeader(View header, int position, String section, int alpha) {
         if(header!=null){
-            TextView lSectionHeader=(TextView) header;
+            TextView lSectionHeader=(TextView) header.findViewById(R.id.tv_city);
             lSectionHeader.setText(section);
-            lSectionHeader.setBackgroundColor(alpha << 24 | 0xf4f4f4);
-            lSectionHeader.setTextColor(alpha << 24 | 0x666666);
+//            lSectionHeader.setBackgroundColor(alpha << 24 | 0xf4f4f4);
+//            lSectionHeader.setTextColor(alpha << 24 | 0x666666);
         }
     }
 

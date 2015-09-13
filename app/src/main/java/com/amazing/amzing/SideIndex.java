@@ -33,9 +33,10 @@ public class SideIndex extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
     }
 
-    public void setCenterLettterText(TextView text){
+    public void setCenterLetterText(TextView text){
         this.centerLetter=text;
     }
+
     public void genIndexBar(Context context,final AmazingListView amazingListView,int letterColor,int textSize) {
         sideHeight = this.getHeight();
         this.removeAllViews();

@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements ItemAdapter.OnItemPerforma
         sideIndex= (SideIndex) findViewById(R.id.sideIndex);
         rlMain.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                sideIndex.setCenterLettterText(letter);
+                sideIndex.setCenterLetterText(letter);
                 sideIndex.genIndexBar(MainActivity.this,listView,0xff1ba9ba,13);
                 rlMain.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
